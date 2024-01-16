@@ -20,16 +20,10 @@ while true do
     local exclusivePet, hugePet = "N/A", "N/A"
     local playerRank = "N/A"
 
-    -- Access the game's data to get diamonds, exclusive pet, huge pet, and rank information
-    local playerData = game.Players.LocalPlayer
-    local leaderstats = playerData:FindFirstChild("leaderstats")
-
-    if leaderstats then
-        local diamondsValue = leaderstats:FindFirstChild("Diamonds")
-        local rankValue = leaderstats:FindFirstChild("Rank")  -- Adjust "Rank" to the actual name of the player rank value
-
-        diamondsAmount = diamondsValue and diamondsValue.Value or 0
-        playerRank = rankValue and rankValue.Value or "N/A"
+    -- Access the Leaderboards GUI to get Diamonds value
+    local leaderboards = game:GetService("Players").LocalPlayer.PlayerScripts.Scripts.GUIs.Leaderboards
+    if leaderboards then
+        diamondsAmount = leaderboards.Diamonds.Text or 0
     end
 
     local data = {
