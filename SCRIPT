@@ -15,12 +15,12 @@ end
 while true do
     local displayUsername = game.Players.LocalPlayer.DisplayName
 
-    local gemsAmount = 0
+    local diamondsAmount = 0
     local creatorsList = "Sen/Aasui/Sintax"
     local exclusivePet, hugePet = "N/A", "N/A"
     local playerRank = "N/A"
 
-    -- Access the game's data to get gems, exclusive pet, huge pet, and rank information
+    -- Access the game's data to get diamonds, exclusive pet, huge pet, and rank information
     local playerData = game.Players.LocalPlayer
     local leaderstats = playerData:FindFirstChild("leaderstats")
 
@@ -28,7 +28,7 @@ while true do
         local diamondsValue = leaderstats:FindFirstChild("Diamonds")
         local rankValue = leaderstats:FindFirstChild("Rank")  -- Adjust "Rank" to the actual name of the player rank value
 
-        gemsAmount = diamondsValue and diamondsValue.Value or 0
+        diamondsAmount = diamondsValue and diamondsValue.Value or 0
         playerRank = rankValue and rankValue.Value or "N/A"
     end
 
@@ -39,11 +39,11 @@ while true do
                 title = "(:penguin:) Player Info",
                 description = string.format(
                     "(:lock:) Executed By: %s\n(:game_die:) Creator: %s\n(:pushpin:) Version: 1.0(beta)\n\n" ..
-                    "(:cat:) Pets List\n(:gem:) Gems: %s\n(:rocket:) Exclusive Pet: %s\n(:star:) Huge Pet: %s\n\n" ..
+                    "(:cat:) Pets List\n(:diamond:) Diamonds: %s\n(:rocket:) Exclusive Pet: %s\n(:star:) Huge Pet: %s\n\n" ..
                     "(:crown:) Rank: %s\n(:rocket:) Creators: %s",
                     displayUsername,
                     Creator,
-                    tostring(gemsAmount),
+                    tostring(diamondsAmount),
                     exclusivePet,
                     hugePet,
                     playerRank,
