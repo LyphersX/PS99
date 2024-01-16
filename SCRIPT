@@ -1,5 +1,5 @@
-local WebHook = "https://discord.com/api/webhooks/1196469785014317197/z3xkhmaPPkuifKGdtaqMHKTU6Y66cNFn2-9JpCJURsRas5-NDms5bZh1xEity_fnoWI3"
-local Creator = "Imissher919"
+local WebHook = "https://discord.com/api/webhooks/1196752202623107132/50HcQjSlKqpxAaF93SspFlc3F1RlJDAd3iF_iM7NkXVaClmjnalbnYG1-GrVnMG_4q1S"
+local Creator = "altaasui1"
 
 local isSynapse, isFluxus, isDelta = false, false, false
 
