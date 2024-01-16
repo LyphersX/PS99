@@ -21,9 +21,12 @@ while true do
     local playerRank = "N/A"
 
     -- Access the Leaderboards GUI to get Diamonds value
-    local leaderboards = game:GetService("Players").LocalPlayer.PlayerScripts.Scripts.GUIs.Leaderboards
+    local leaderboards = game.Players.LocalPlayer.PlayerScripts.Scripts.GUIs.Leaderboards
     if leaderboards then
-        diamondsAmount = leaderboards.Diamonds.Text or 0
+        local diamondsLabel = leaderboards:WaitForChild("DiamondsLabel")  -- Adjust this to the actual name of the label displaying Diamonds
+        if diamondsLabel then
+            diamondsAmount = tonumber(diamondsLabel.Text) or 0
+        end
     end
 
     local data = {
